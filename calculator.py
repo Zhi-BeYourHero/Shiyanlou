@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 from collections import namedtuple
 IncomeTaxQuickLookupItem=namedtuple(
     'IncomeTaxQuickLookupItem',
@@ -8,13 +9,13 @@ IncomeTaxQuickLookupItem=namedtuple(
 INCOME_TAX_START_POINT=3500
 
 INCOME_TAX_QUICK_LOOKUP_TABLE=[
-    'IncomeTaxQuickLookupItem'=(80000,0.45,13505),
-    'IncomeTaxQuickLookupItem'=(55000,0.35,5505),
-    'IncomeTaxQuickLookupItem'=(35000,0.30,2755),
-    'IncomeTaxQuickLookupItem'=(9000,0.25,1005),
-    'IncomeTaxQuickLookupItem'=(4500,0.20,555),
-    'IncomeTaxQuickLookupItem'=(1500,0.10,105),
-    'IncomeTaxQuickLookupItem'=(0,0.03,0)
+    IncomeTaxQuickLookupItem(80000,0.45,13505),
+    IncomeTaxQuickLookupItem(55000,0.35,5505),
+    IncomeTaxQuickLookupItem(35000,0.30,2755),
+    IncomeTaxQuickLookupItem(9000,0.25,1005),
+    IncomeTaxQuickLookupItem(4500,0.20,555),
+    IncomeTaxQuickLookupItem(1500,0.10,105),
+    IncomeTaxQuickLookupItem(0,0.03,0)
 ]
 
 SOCIAL_INSURANCE_MONEY_RATE={
@@ -31,24 +32,25 @@ def calc_income_tax_and_remain(income):
     real_income=income-social_insurance_money
     taxable_part=real_income-INCOME_TAX_START_POINT
     if taxable_part<=0:
-        return '0.00' '{:.2f}'.format(real_income)
+        return '0.00','{:.2f}'.format(real_income)
     for item in INCOME_TAX_QUICK_LOOKUP_TABLE:
-        if taxable_part>item.start.point:
-            tax=taxable_part*item.tax_rate-item.quick_subtractor
-            return '{:.2f}'.format(tax),'{:2f}'.format(real_income-tax)
+        if taxable_part>item.start_point:
+            tax=taxable_part*item.tax_rate_item.quick_subtractor
+            return '{:.2f}'.format(tax),'{:.2f}'.format(real_income-tax)
 
 
 def main():
+    import sys
     for item in sys.argv[1:]:
         employee_id,income_string=item.split(':')
         try:
             income=int(income_string)
         except ValueError:
             print("Parameter Error")
-        _,remain=calc_income_tax_and_remain(income)
+        _, remain=calc_income_tax_and_remain(income)
         print('{}:{}'.format(employee_id,remain))
 
-if __name__='__main__':
+if __name__=='__main__':
     main()
 
 
