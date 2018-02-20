@@ -17,7 +17,7 @@ class File(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(80))
     created_time = db.Column(db.DateTime)
-    category_id = db.Column(db.Integer,db.ForeignKey(categories.id))
+    category_id = db.Column(db.Integer,db.ForeignKey('categories.id'))
     category = db.relationship("Category",uselist=False)
     content = db.Column(db.Text)
     def __init__(self,title,created_time,category,content):
